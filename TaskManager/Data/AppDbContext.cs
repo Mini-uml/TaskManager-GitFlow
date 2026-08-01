@@ -1,16 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.Models;
 
-namespace TaskManager.Data 
+namespace TaskManager.Data
 {
-    public class AppDbContext : DbContext 
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions <AppDbContext> options)
-            : base(options) 
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
         {
 
         }
 
-        public DbSet<TaskItem> Task { get; set; }
-     }
+        public DbSet<TaskItem> Tasks { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TaskItem>()
+                .ToTable("Tasks");
+        }
+    }
 }
