@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TaskManager.Models.TaskItem>
+
+<h1>Lista de Tareas</h1>
+
+<a asp-action="Create" class="btn btn-primary">
+    Nueva tarea
+</a>
+
+
+<table class="table table-bordered mt-3">
+
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.Title
+                </td>
+
+                <td>
+                    @item.Description
+                </td>
+
+                <td>
+                    @(item.Completed ? "Completada" : "Pendiente")
+                </td>
+
+
+                <td>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       class="btn btn-warning">
+                        Editar
+                    </a>
+
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-danger">
+                        Eliminar
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
