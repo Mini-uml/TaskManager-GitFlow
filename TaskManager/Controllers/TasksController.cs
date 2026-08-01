@@ -15,16 +15,29 @@ namespace TaskManager.Controllers
         }
 
 
-       
-        public async Task<IActionResult> Index()
-        {
-            var tasks = await _context.Tasks.ToListAsync();
 
-            return View(tasks);
+        public async Task<IActionResult> Index(string filter)
+        {
+            var tasks = _context.Tasks.AsQueryable();
+
+
+            if (filter == "completed")
+            {
+                tasks = tasks.Where(t => t.Completed);
+            }
+
+
+            if (filter == "pending")
+            {
+                tasks = tasks.Where(t => !t.Completed);
+            }
+
+
+            return View(await tasks.ToListAsync());
         }
 
 
-        
+
         public IActionResult Create()
         {
             return View();
